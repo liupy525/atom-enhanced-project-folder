@@ -35,15 +35,22 @@ class View extends SelectListView
     # Remaining characters are plain text
     context.text path.substring(lastIndex)
 
-  initialize: ->
+  initialize: (defaultPath = true) ->
     super
     @addClass('project-folder')
     atom.commands.add @element,
       'project-folder:replace': => @replace()
       'project-folder:switch-action': => @switchAction()
       'project-folder:confirm-and-continue': => @confirmAndContinue()
+      'project-folder:go-into': => @goInto()
+      'project-folder:go-back': => @goBack()
 
     @panel ?= atom.workspace.addModalPanel({item: this, visible: false})
+    if defaultPath
+      @defaultDirectories = _.uniq @getNormalDirectories().concat(@getGitDirectories())
+    else
+      @defaultDirectories = @getRootDirectories()
+    @paths = []
     this
 
   viewForItem: (item) ->
@@ -57,13 +64,20 @@ class View extends SelectListView
         @div {class: 'secondary-line path no-icon'}, =>
           View.highlightMatches(this, item, matches)
 
-  getItems: ->
+  getItems: (dir = '') ->
     loadedPaths = atom.project.getPaths()
     switch @action
       when 'remove'
         dirs = loadedPaths
       when 'add'
-        dirs = _.uniq @getNormalDirectories().concat(@getGitDirectories())
+        if dir
+          dirs = []
+          for path in fs.listSync(fs.normalize(dir)) when fs.isDirectorySync(path)
+            dirs.push path
+        else
+          dirs = @defaultDirectories
+
+        dirs = _.reject(dirs, (path) -> _path.basename(path) in settings.get('ignoreDirectories'))
         if settings.get('hideLoadedFolderFromAddList')
           dirs = _.reject(dirs, (path) -> path in loadedPaths)
 
@@ -72,7 +86,7 @@ class View extends SelectListView
 
   getNormalDirectories: ->
     dirs = []
-    for dir in settings.get('projectRootDirectories')
+    for dir in settings.get('projectDefaultDirectories')
       for path in fs.listSync(fs.normalize(dir)) when fs.isDirectorySync(path)
         dirs.push path
     dirs
@@ -92,6 +106,13 @@ class View extends SelectListView
         else
           dirs.push path if isGitRepository(path)
           true
+    dirs
+
+  getRootDirectories: ->
+    dirs = []
+    for dir in settings.get('searchRootDirectories')
+      for path in fs.listSync(fs.normalize(dir)) when fs.isDirectorySync(path)
+        dirs.push path
     dirs
 
   populateList: ->
@@ -152,5 +173,17 @@ class View extends SelectListView
       @remove p
 
     @cancel()
+
+  goInto: ->
+    selected = @getSelectedItem()
+    projectPath = fs.normalize(selected)
+    results = @getItems(projectPath)
+    if results && results.length != 0
+      @paths.unshift(projectPath)
+      @setItems results
+
+  goBack: ->
+    @paths.shift()
+    @setItems @getItems(@paths[0])
 
 module.exports = View

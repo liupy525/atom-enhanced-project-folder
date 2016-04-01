@@ -1,17 +1,19 @@
 {CompositeDisposable} = require 'atom'
 settings = require './settings'
+DirectoriesView = require './view'
 
 module.exports =
   config: settings.config
 
   activate: ->
-    @view = new (require './view')
+    @DirectoriesView = new DirectoriesView
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace',
-      'project-folder:add': => @view.start('add')
-      'project-folder:remove': => @view.start('remove')
+      'project-folder:add': => (new DirectoriesView).start('add')
+      'project-folder:remove': => (new DirectoriesView).start('remove')
+      'project-folder:search': => (new DirectoriesView false).start('add')
 
   deactivate: ->
     @subscriptions.dispose()
-    @view?.destroy?()
-    {@subscriptions, @view} = {}
+    @DirectoriesView?.destroy?()
+    {@subscriptions, @DirectoriesView} = {}
