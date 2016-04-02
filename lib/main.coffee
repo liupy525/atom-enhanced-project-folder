@@ -9,9 +9,9 @@ module.exports =
     @DirectoriesView = new DirectoriesView
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace',
-      'project-folder:add': => (new DirectoriesView).start('add')
-      'project-folder:remove': => (new DirectoriesView).start('remove')
-      'project-folder:search': => (new DirectoriesView false).start('add')
+      'enhanced-project-folder:add': => (new DirectoriesView).start('add')
+      'enhanced-project-folder:remove': => (new DirectoriesView).start('remove')
+      'enhanced-project-folder:search': => (new DirectoriesView false).start('add')
 
   deactivate: ->
     @subscriptions.dispose()

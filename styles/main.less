@@ -1,17 +1,17 @@
 @import "ui-variables";
 
 // Highlight matched text
-.project-folder .list-group {
+.enhanced-project-folder .list-group {
   .character-match {
     color: @text-color-highlight;
     font-weight: bold;
   }
 }
 .list-group li.selected {
-  .project-folder.remove & {
+  .enhanced-project-folder.remove & {
     background-color: fadeout(@background-color-error, 40%);
   }
-  .project-folder.add & {
+  .enhanced-project-folder.add & {
     background-color: fadeout(@background-color-info, 40%);
   }
 }

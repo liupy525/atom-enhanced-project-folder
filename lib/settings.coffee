@@ -8,7 +8,7 @@ class Settings
   set: (param, value) ->
     atom.config.set "#{@scope}.#{param}", value
 
-module.exports = new Settings 'project-folder',
+module.exports = new Settings 'enhanced-project-folder',
   projectDefaultDirectories:
     order: 1
     type: 'array'

@@ -1,17 +1,17 @@
 {
-  "name": "project-folder",
+  "name": "enhanced-project-folder",
   "main": "./lib/main",
-  "version": "0.1.8",
-  "description": "Quickly add/remove project folder",
+  "version": "0.0.0",
+  "description": "Quickly search/add/remove project folder",
   "keywords": [],
   "activationCommands": {
     "atom-workspace": [
-      "project-folder:add",
-      "project-folder:remove",
-      "project-folder:search"
+      "enhanced-project-folder:add",
+      "enhanced-project-folder:remove",
+      "enhanced-project-folder:search"
     ]
   },
-  "repository": "https://github.com/t9md/atom-project-folder",
+  "repository": "https://github.com/liupy525/atom-enhanced-project-folder",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"

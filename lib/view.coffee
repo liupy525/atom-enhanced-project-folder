@@ -37,13 +37,13 @@ class View extends SelectListView
 
   initialize: (defaultPath = true) ->
     super
-    @addClass('project-folder')
+    @addClass('enhanced-project-folder')
     atom.commands.add @element,
-      'project-folder:replace': => @replace()
-      'project-folder:switch-action': => @switchAction()
-      'project-folder:confirm-and-continue': => @confirmAndContinue()
-      'project-folder:go-into': => @goInto()
-      'project-folder:go-back': => @goBack()
+      'enhanced-project-folder:replace': => @replace()
+      'enhanced-project-folder:switch-action': => @switchAction()
+      'enhanced-project-folder:confirm-and-continue': => @confirmAndContinue()
+      'enhanced-project-folder:go-into': => @goInto()
+      'enhanced-project-folder:go-back': => @goBack()
 
     @panel ?= atom.workspace.addModalPanel({item: this, visible: false})
     if defaultPath
