@@ -1,8 +1,8 @@
-# project-folder [![Build Status](https://travis-ci.org/t9md/atom-project-folder.svg?branch=master)](https://travis-ci.org/t9md/atom-project-folder)
+# enhanced-project-folder
 
-Quickly add/remove project folder.
+Quickly search/add/remove project folder. [Fork of the powerful [project-folder](https://atom.io/packages/project-folder) by t9md]
 
-![gif](https://raw.githubusercontent.com/t9md/t9md/c9cbeb79d3e8f86fc60efb52e696d4340012e4da/img/atom-project-folder.gif)
+![gif](http://7xs6ao.com1.z0.glb.clouddn.com/atom-project-folder.gif)
 
 # What is this?
 
@@ -12,7 +12,9 @@ This package enables you to quickly do above actions and provide extra command t
 
 # Features
 
+* Quickly search project folder from root directory or default project directory.
 * Quickly add/remove project folder.
+* Can go into selected directory to continue searching with `right` and go back with `left`
 * Can switch action between `add`/`remove` with `tab` and UI color reflect current action.
 * Replace all project folders with selected item.
 * Hide already loaded folders from select list when adding.
@@ -21,61 +23,76 @@ This package enables you to quickly do above actions and provide extra command t
 
 # Command
 
-* `project-folder:add`: Add project folder.
-* `project-folder:remove`: Remove project folder.
+* `enhanced-project-folder:add`: Add project folder from default project directory.
+* `enhanced-project-folder:search`: Add project folder from root directory.
+* `enhanced-project-folder:remove`: Remove project folder.
 
 In mini editor
-* `project-folder:replace`: Remove project except selected.
-* `project-folder:switch-action`: Switch action 'add' / 'remove'. CSS style changes depending on action add(`blue`), remove(`red`), so that you can understand what you are doing.
-* 'project-folder:confirm-and-continue': Confirm action without closing select list, you can continue to add/remove next project folder.
+* `enhanced-project-folder:go-into`: Go into selected directory to continue searching projects.
+* `enhanced-project-folder:go-back`: Go back to parent directory.
+* `enhanced-project-folder:replace`: Remove project except selected.
+* `enhanced-project-folder:switch-action`: Switch action 'add' / 'remove'. CSS style changes depending on action add(`blue`), remove(`red`), so that you can understand what you are doing.
+* `enhanced-project-folder:confirm-and-continue`: Confirm action without closing select list, you can continue to add/remove next project folder.
 
 # How to use
 
-Here is training course from Basic(step-1) to step3.
+Here are four training courses.
 
 ## Basic.
 
-1. Start `project-folder:add` from command palette or from keymap.
+1. Start `enhanced-project-folder:add` or `enhanced-project-folder:search` from command palette or from keymap.
 2. Chose folder you want to add.
 3. Project folder added and listed in tree-view.
 
 ## Switch action / Continuous action.
 
-1. Start `project-folder:add` from command palette or from keymap.
+1. Start `enhanced-project-folder:add` or `enhanced-project-folder:search` from command palette or from keymap.
 2. Type `space` key on item you want to add, and continue to add next item with `space`.
 3. Then type `tab`, selected items color change to `red` background to indicate action changed to `remove`. Then type `space` to continuously remove folder from project list.
 
+## GoInto action / GoBack action
+
+1. Start `enhanced-project-folder:add` or `enhanced-project-folder:search` from command palette or from keymap.
+2. Type `right` key on item you want to go into.
+3. List updated to show selected item's child directory.
+4. Type `left` key on any items.
+5. List updated to show parent directory.dire
+
 ##  Replace action.
 
-1. Start `project-folder:add` from command palette or from keymap.
+1. Start `enhanced-project-folder:add` or `enhanced-project-folder:search` from command palette or from keymap.
 2. Add multiple folder by typing `space` several times.
 3. Then type `ctrl-r` on item you want to replace.
 4. Project folders you added on 2. was replaced with only item you just replaced.
 
 # Keymap
 
-By default, keymap set on only mini project-folder's mini editor scope.  
+By default, keymap set on only mini enhanced-project-folder's mini editor scope.  
 This keymap is effective only while select list is shown.
 
 ```coffeescript
-'.project-folder atom-text-editor[mini]':
-  'ctrl-r': 'project-folder:replace'
-  'tab':    'project-folder:switch-action'
-  'space':  'project-folder:confirm-and-continue'
+'.enhanced-project-folder atom-text-editor[mini]':
+  'ctrl-r': 'enhanced-project-folder:replace'
+  'tab':    'enhanced-project-folder:switch-action'
+  'space':  'enhanced-project-folder:confirm-and-continue'
+  'right':  'enhanced-project-folder:go-into'
+  'left' :  'enhanced-project-folder:go-back'
 ```
 
-To start `project-folder:add` or `project-folder:remove`, invoke from command pallete, or set keymap by yourself.
+To start `enhanced-project-folder:add` or `enhanced-project-folder:remove`, invoke from command pallete, or set keymap by yourself.
 
 e.g. My setting.
 
 ```coffeescript
 'atom-workspace:not([mini])':
-  'ctrl-alt-p': 'project-folder:add'
+  'ctrl-alt-p': 'enhanced-project-folder:add'
 ```
 
 # Config
 
-* `projectRootDirectories`: Comma separated list of directries to search project directories.
+**For Example:**
+
+* `projectDefaultDirectories`: Comma separated list of directories to search project directories.
 
 e.g
 `~/.atom/packages, ~/github`
@@ -83,8 +100,8 @@ e.g
 If you want to directly edit `config.cson`, see blow.
 
 ```coffeescript
-"project-folder":
-  projectRootDirectories: [
+"enhanced-project-folder":
+  projectDefaultDirectories: [
     "~/.atom/packages"
     "~/github"
   ]

@@ -2,7 +2,7 @@
   "name": "enhanced-project-folder",
   "main": "./lib/main",
   "version": "0.0.0",
-  "description": "Quickly search/add/remove project folder",
+  "description": "Quickly search/add/remove project folder. [fork of project-folder by t9md]",
   "keywords": [],
   "activationCommands": {
     "atom-workspace": [
